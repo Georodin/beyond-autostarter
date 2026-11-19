@@ -2,8 +2,8 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<Version>1.1.1</Version>
-		<FileVersion>1.1.1.0</FileVersion>
+		<Version>1.2.0</Version>
+		<FileVersion>1.2.0.0</FileVersion>
 		<!-- Keep the user settings directory compatible with prior builds. -->
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<TargetFramework>net10.0-windows</TargetFramework>

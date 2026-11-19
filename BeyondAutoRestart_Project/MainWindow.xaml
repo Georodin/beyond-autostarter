@@ -44,10 +44,62 @@
                   HeadersVisibility="Column" GridLinesVisibility="Horizontal" Background="#2D2D3E"
                   AlternationCount="2" RowBackground="#242438" AlternatingRowBackground="#2D2D3E"
                   Foreground="White" RowHeight="34">
+            <DataGrid.Resources>
+                <Style x:Key="CellEditor" TargetType="TextBox">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False">
+                            <Setter Property="Background" Value="#23273A"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="CaretBrush" Value="White"/>
+                            <Setter Property="SelectionBrush" Value="#445D91"/>
+                            <Setter Property="SelectionTextBrush" Value="White"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="#3F567F"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                <Condition Binding="{Binding Path=(Selector.IsSelectionActive), RelativeSource={RelativeSource Self}}" Value="False"/>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="#454662"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="BorderBrush" Value="#BDD1F5"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Executable" Width="*" MinWidth="130" Binding="{Binding Path}"
-                                    ElementStyle="{StaticResource PathText}"/>
-                <DataGridTextColumn Header="First start after (s)" Width="124" Binding="{Binding FirstStartAfterSeconds}"/>
+                                    ElementStyle="{StaticResource PathText}" EditingElementStyle="{StaticResource CellEditor}"/>
+                <DataGridTextColumn Header="First start after (s)" Width="124" Binding="{Binding FirstStartAfterSeconds}"
+                                    EditingElementStyle="{StaticResource CellEditor}"/>
                 <DataGridCheckBoxColumn Header="Start if stopped" Width="108" Binding="{Binding StartIfNotRunning}"/>
                 <DataGridTextColumn Header="Status" Width="160" Binding="{Binding Status, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Actions" Width="154" IsReadOnly="True">
